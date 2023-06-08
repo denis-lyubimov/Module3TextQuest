@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@
     <a  href="https://javarush.com/quests/lectures/jru.module3.lecture04">задаче</a>
     javarush<br>
     Чотобы начать нажми на кнопку
-    <button class="button button1" onclick="window.location='/quest/game'">старт</button>
+    <button class="button button1" onclick="window.location='/introduction.jsp'">старт</button>
 </h3>
 
 </body>

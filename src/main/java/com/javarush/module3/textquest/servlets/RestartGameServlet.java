@@ -1,5 +1,6 @@
 package com.javarush.module3.textquest.servlets;
 
+import com.javarush.module3.textquest.player.User;
 import com.javarush.module3.textquest.steps.Step;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ public class RestartGameServlet extends HttpServlet {
         String restartReason = req.getParameter("reason");
         HttpSession currentSession = req.getSession(true);
         currentSession.setAttribute("step", initialStep);
+        User user = (User) currentSession.getAttribute("user");
+        user.incrementGameCounter();
         resp.sendRedirect("question.jsp");
     }
 }

@@ -20,7 +20,8 @@
 </div>
 <div>ПОБЕДА!
 </div>
-<button class="button button1" onclick="window.location='/quest/restart?reason=win'">начать с начала</button>
+<button class="button button1" onclick="window.location='/restart?reason=win'">начать с начала</button>
 </form>
 </body>
 </html>
+<jsp:include page="templates/statistics.jsp"/>

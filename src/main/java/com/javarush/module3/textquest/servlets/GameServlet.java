@@ -5,6 +5,7 @@ import com.javarush.module3.textquest.cases.AbstractCase;
 import com.javarush.module3.textquest.cases.CaptainBridgeCase;
 import com.javarush.module3.textquest.cases.ChallengeCase;
 import com.javarush.module3.textquest.cases.SaySmthAboutYourselfCase;
+import com.javarush.module3.textquest.player.User;
 import com.javarush.module3.textquest.steps.Step;
 
 import javax.servlet.ServletException;
@@ -26,8 +27,18 @@ public class GameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession currentSession = req.getSession(true);
 
+        User user = (User) currentSession.getAttribute("user");
+        if (user == null) {
+            resp.sendRedirect("introduction.jsp");
+            return;
+        }
+        if (user.getName() == null | user.getName().isEmpty()) {
+            resp.sendRedirect("introduction.jsp");
+            return;
+        }
+
         Step currentStep = (Step) currentSession.getAttribute("step");
-        if (currentStep == null){
+        if (currentStep == null) {
             currentStep = initialStep;
             currentSession.setAttribute("step", currentStep);
             resp.sendRedirect("question.jsp");
@@ -35,20 +46,19 @@ public class GameServlet extends HttpServlet {
         }
 
         String answerResult = req.getParameter("answer");
-        System.out.println("answer = " + answerResult );
-        if ( answerResult == null){
+        if (answerResult == null | answerResult.isEmpty()) {
             resp.sendRedirect("question.jsp");
             return;
         }
-
 
         AbstractCase initalCase = new ChallengeCase();
         initalCase.setNextCase(new CaptainBridgeCase()).setNextCase(new SaySmthAboutYourselfCase());
         initalCase.checkStep(currentStep, answerResult, resp);
 
-        if (currentStep != Step.values()[Step.values().length - 1] ) {
+        if (currentStep != Step.values()[Step.values().length - 1]) {
             currentStep = Step.values()[currentStep.ordinal() + 1];
             currentSession.setAttribute("step", currentStep);
         }
     }
 }
+

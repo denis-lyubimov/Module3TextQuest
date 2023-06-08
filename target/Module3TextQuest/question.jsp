@@ -24,7 +24,7 @@
 </div>
 <div><%= Questions.getInstance().getQuestions().get(step)%>
 </div>
-<form action="/quest/game" method="get">
+<form action="/game" method="get">
     <div>
         <input type="radio" id="answerA" name="answer" value="answerA" required checked>
         <label for="answerA"><%= Answers.getInstance().getAnswersA().get(step)%>
@@ -39,3 +39,4 @@
 </form>
 </body>
 </html>
+<jsp:include page="templates/statistics.jsp"/>
