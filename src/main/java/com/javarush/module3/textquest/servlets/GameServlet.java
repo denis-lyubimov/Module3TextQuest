@@ -20,8 +20,6 @@ import java.io.IOException;
 public class GameServlet extends HttpServlet {
 
     private Step initialStep = Step.Challenge;
-    private int gameNumber;
-    private int playerName;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,11 +27,15 @@ public class GameServlet extends HttpServlet {
 
         User user = (User) currentSession.getAttribute("user");
         if (user == null) {
-            resp.sendRedirect("introduction.jsp");
+            resp.sendError(400,"no user");
             return;
         }
-        if (user.getName() == null | user.getName().isEmpty()) {
-            resp.sendRedirect("introduction.jsp");
+        if (user.getName() == null ) {
+            resp.sendError(400, "no username");
+            return;
+        }
+        if (user.getName().isBlank()) {
+            resp.sendError(400, "empty username");
             return;
         }
 
@@ -46,8 +48,12 @@ public class GameServlet extends HttpServlet {
         }
 
         String answerResult = req.getParameter("answer");
-        if (answerResult == null | answerResult.isEmpty()) {
-            resp.sendRedirect("question.jsp");
+        if (answerResult == null ) {
+            resp.sendError(400, "no answer value");
+            return;
+        }
+        if ( answerResult.isBlank()) {
+            resp.sendError(400, "answer is empty");
             return;
         }
 

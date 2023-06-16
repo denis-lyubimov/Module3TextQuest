@@ -10,6 +10,12 @@ public class ChallengeCase extends AbstractCase{
 
     @Override
     protected boolean getAnswerResult(String answer) {
+        if (answer == null){
+            throw new NullPointerException("answer can not be null");
+        }
+        if (answer.isBlank()){
+            throw new IllegalArgumentException("answer can not be blank");
+        }
         return answer.equals(answers[0]);
     }
 }

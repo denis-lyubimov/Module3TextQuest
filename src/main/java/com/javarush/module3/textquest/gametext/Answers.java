@@ -18,7 +18,7 @@ public class Answers {
 
     private final Map<Step, String> answersB = new HashMap<>() {{
         put(Step.Challenge, "Отклонить вызов");
-        put(Step.Captain_Bridge, "подняться на мостик");
+        put(Step.Captain_Bridge, "Подняться на мостик");
         put(Step.Say_Smth_About_Yourself, "Солгать о себе");
     }};
 

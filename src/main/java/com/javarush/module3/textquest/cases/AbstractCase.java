@@ -1,11 +1,8 @@
 package com.javarush.module3.textquest.cases;
 
 import com.javarush.module3.textquest.steps.Step;
-
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-
 import static java.util.Objects.isNull;
 
 public abstract class AbstractCase {
@@ -23,12 +20,12 @@ public abstract class AbstractCase {
             this.nextCase = nextCase;
             return this.nextCase;
         }
-        return nextCase;
+        return this.nextCase;
     }
 
     protected abstract boolean getAnswerResult(String answer);
 
-    public void checkStep(Step step, String answer, HttpServletResponse response) {
+    public void checkStep(Step step, String answer, HttpServletResponse response) throws IOException {
         if (this.step == step) {
             redirectToJSP(getAnswerResult(answer), response);
         } else {
@@ -36,21 +33,23 @@ public abstract class AbstractCase {
         }
     }
 
-    protected void redirectToJSP(Boolean answerResult, HttpServletResponse response) {
+    protected void redirectToJSP(Boolean answerResult, HttpServletResponse response) throws IOException {
         if (answerResult) {
             try {
                 response.sendRedirect("question.jsp");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
             }
         } else {
             try {
                 response.sendRedirect("fail.jsp");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
             }
         }
     }
+
+
 
 
 }
