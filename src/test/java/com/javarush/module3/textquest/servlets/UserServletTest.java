@@ -35,7 +35,5 @@ public class UserServletTest {
         servlet.doGet(request, response);
         verify(request).getSession(true);
         verify(response).sendRedirect("/game");
-
-
     }
 }
