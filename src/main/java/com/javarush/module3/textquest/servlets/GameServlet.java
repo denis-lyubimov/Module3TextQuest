@@ -26,16 +26,7 @@ public class GameServlet extends HttpServlet {
         HttpSession currentSession = req.getSession(true);
 
         User user = (User) currentSession.getAttribute("user");
-        if (user == null) {
-            resp.sendError(400,"no user");
-            return;
-        }
-        if (user.getName() == null ) {
-            resp.sendError(400, "no username");
-            return;
-        }
-        if (user.getName().isBlank()) {
-            resp.sendError(400, "empty username");
+        if (!validateUser(user, resp)) {
             return;
         }
 
@@ -48,12 +39,7 @@ public class GameServlet extends HttpServlet {
         }
 
         String answerResult = req.getParameter("answer");
-        if (answerResult == null ) {
-            resp.sendError(400, "no answer value");
-            return;
-        }
-        if ( answerResult.isBlank()) {
-            resp.sendError(400, "answer is empty");
+        if (!validateAnswer(answerResult, resp)) {
             return;
         }
 
@@ -66,6 +52,41 @@ public class GameServlet extends HttpServlet {
             currentStep = Step.values()[currentStep.ordinal() + 1];
             currentSession.setAttribute("step", currentStep);
         }
+    }
+
+    private boolean validateAnswer(String answerResult, HttpServletResponse resp) {
+        try {
+            if (answerResult == null) {
+                resp.sendError(400, "no answer value");
+                return false;
+            }
+            if (answerResult.isBlank()) {
+                resp.sendError(400, "answer is empty");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private boolean validateUser(User user, HttpServletResponse resp) {
+        try {
+            if (user == null) {
+                resp.sendError(400, "no user value");
+                return false;
+            }
+            if (user.getName() == null) {
+                resp.sendError(400, "no username value");
+                return false;
+            } else if (user.getName().isBlank()) {
+                resp.sendError(400, "username is empty");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
 
