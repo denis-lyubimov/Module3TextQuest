@@ -23,8 +23,10 @@ public class CaptainBridgeTest {
     public void setNextCaseRetrunsCorrectNextCase() {
         AbstractCase expectedNextCase = mock(AbstractCase.class);
         AbstractCase unexpectedNextCase = mock(AbstractCase.class);
-        AbstractCase nextCase = captainBridgeCase.setNextCase(expectedNextCase);
-        nextCase = captainBridgeCase.setNextCase(unexpectedNextCase);
+        captainBridgeCase.setNextCase(expectedNextCase);
+        AbstractCase nextCase = captainBridgeCase.getNextCase();
+        captainBridgeCase.setNextCase(unexpectedNextCase);
+        nextCase = captainBridgeCase.getNextCase();
         assertEquals(expectedNextCase, nextCase);
     }
 

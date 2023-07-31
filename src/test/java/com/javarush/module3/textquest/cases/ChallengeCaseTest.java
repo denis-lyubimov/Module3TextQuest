@@ -21,8 +21,10 @@ public class ChallengeCaseTest {
     public void setNextCaseRetrunsCorrectNextCase() {
         AbstractCase expectedNextCase = mock(AbstractCase.class);
         AbstractCase unexpectedNextCase = mock(AbstractCase.class);
-        AbstractCase nextCase = challengeCase.setNextCase(expectedNextCase);
-        nextCase = challengeCase.setNextCase(unexpectedNextCase);
+        challengeCase.setNextCase(expectedNextCase);
+        AbstractCase nextCase = challengeCase.getNextCase();
+        challengeCase.setNextCase(unexpectedNextCase);
+        nextCase = challengeCase.getNextCase();
         assertEquals(expectedNextCase, nextCase);
     }
 

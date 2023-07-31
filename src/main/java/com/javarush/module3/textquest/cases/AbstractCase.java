@@ -15,41 +15,40 @@ public abstract class AbstractCase {
         this.step = step;
     }
 
-    public AbstractCase setNextCase(AbstractCase nextCase) {
+    public void setNextCase(AbstractCase nextCase) {
         if (isNull(this.nextCase)) {
             this.nextCase = nextCase;
-            return this.nextCase;
         }
+    }
+
+    public AbstractCase getNextCase() {
         return this.nextCase;
     }
 
     protected abstract boolean getAnswerResult(String answer);
 
     public void checkStep(Step step, String answer, HttpServletResponse response) throws IOException {
-        if (this.step == step) {
+        if (this.step.equals(step)) {
             redirectToJSP(getAnswerResult(answer), response);
         } else {
             nextCase.checkStep(step, answer, response);
         }
     }
 
-    protected void redirectToJSP(Boolean answerResult, HttpServletResponse response) throws IOException {
-        if (answerResult) {
-            try {
+    protected void redirectToJSP(Boolean answerResult, HttpServletResponse response) {
+        try {
+            if (answerResult) {
                 response.sendRedirect("question.jsp");
-            } catch (IOException e) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
-            }
-        } else {
-            try {
+            } else {
                 response.sendRedirect("fail.jsp");
-            } catch (IOException e) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
             }
+        }catch (IOException e){
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (IOException ex) {
+                e.printStackTrace();
+            }
+            e.printStackTrace();
         }
     }
-
-
-
-
 }

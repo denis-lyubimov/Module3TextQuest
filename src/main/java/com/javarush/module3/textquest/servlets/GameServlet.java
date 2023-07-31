@@ -58,7 +58,8 @@ public class GameServlet extends HttpServlet {
         }
 
         AbstractCase initalCase = new ChallengeCase();
-        initalCase.setNextCase(new CaptainBridgeCase()).setNextCase(new SaySmthAboutYourselfCase());
+        initalCase.setNextCase(new CaptainBridgeCase());
+        initalCase.getNextCase().setNextCase(new SaySmthAboutYourselfCase());
         initalCase.checkStep(currentStep, answerResult, resp);
 
         if (currentStep != Step.values()[Step.values().length - 1]) {

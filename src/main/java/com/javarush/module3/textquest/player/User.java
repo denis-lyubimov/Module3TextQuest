@@ -2,11 +2,11 @@ package com.javarush.module3.textquest.player;
 
 import lombok.Getter;
 
+@Getter
 public class User {
 
-    @Getter
+
     private String name ;
-    @Getter
     private int gameCounter;
 
     public User(String name) {

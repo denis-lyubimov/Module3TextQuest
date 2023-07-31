@@ -22,8 +22,10 @@ public class SaySmthAboutYourselfCaseTest {
     public void setNextCaseRetrunsCorrectNextCase() {
         AbstractCase expectedNextCase = mock(AbstractCase.class);
         AbstractCase unexpectedNextCase = mock(AbstractCase.class);
-        AbstractCase nextCase = saySmthAboutYourselfCase.setNextCase(expectedNextCase);
-        nextCase = saySmthAboutYourselfCase.setNextCase(unexpectedNextCase);
+        saySmthAboutYourselfCase.setNextCase(expectedNextCase);
+        AbstractCase nextCase = saySmthAboutYourselfCase.getNextCase();
+        saySmthAboutYourselfCase.setNextCase(unexpectedNextCase);
+        nextCase = saySmthAboutYourselfCase.getNextCase();
         assertEquals(expectedNextCase, nextCase);
     }
 
