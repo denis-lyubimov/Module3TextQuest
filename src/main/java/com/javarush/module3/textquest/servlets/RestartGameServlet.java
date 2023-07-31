@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "RestartGameServlet", value = "/restart")
+@WebServlet(value = "/restart", name = "RestartGameServlet")
 public class RestartGameServlet extends HttpServlet {
     private Step initialStep = Step.Challenge;
 
